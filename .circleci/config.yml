@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  node: circleci/node@4.7
+  node: circleci/node@5.0.0
 
 workflows:
   build-and-test:
@@ -9,6 +9,7 @@ workflows:
       - node/test:
           version: '16.10'
           pkg-manager: npm
-      - node/build:
+      - node/run:
+          npm-run: build
           version: '16.10'
           pkg-manager: npm
