@@ -1,3 +1,3 @@
 export interface DefaultPayload {
-    getToken: () => Promise<string>;
+  getToken: () => Promise<string>;
 }

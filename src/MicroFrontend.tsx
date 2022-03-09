@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, FC } from 'react';
+import { useEffect, useState, useRef, FC } from "react";
 
 import {
   mountMicroFrontend,
@@ -8,8 +8,8 @@ import {
   loadScripts,
   loadCss,
   getCssIds,
-} from './microFrontendHelpers';
-import { fetchAssets, Assets } from './fetchAssets';
+} from "./microFrontendHelpers";
+import { fetchAssets, Assets } from "./fetchAssets";
 
 declare global {
   interface Window {
@@ -27,7 +27,7 @@ type MicroFrontendProps<T> = {
   handleError: (error: Error | unknown, extra?: any) => void;
 };
 
-type FetchAssetsStatus = 'IDLE' | 'SUCCESS' | 'LOADING' | 'ERROR';
+type FetchAssetsStatus = "IDLE" | "SUCCESS" | "LOADING" | "ERROR";
 
 export const MicroFrontend = <T extends unknown>({
   id,
@@ -36,13 +36,13 @@ export const MicroFrontend = <T extends unknown>({
   staticPath,
   payload,
   FetchStatus,
-  handleError
+  handleError,
 }: MicroFrontendProps<T>) => {
-  const [status, setStatus] = useState<FetchAssetsStatus>('IDLE');
+  const [status, setStatus] = useState<FetchAssetsStatus>("IDLE");
   const node = useRef<HTMLDivElement>(null);
 
   const mount = () => {
-    setStatus('SUCCESS');
+    setStatus("SUCCESS");
     mountMicroFrontend(id, payload, node.current!);
     return node.current;
   };
@@ -57,11 +57,11 @@ export const MicroFrontend = <T extends unknown>({
 
     let cssIds: string[] = [];
     let mountPoint: HTMLDivElement | null = null;
-    setStatus('LOADING');
+    setStatus("LOADING");
 
     const handleLoadingError = (e: Error) => {
       handleError(e);
-      setStatus('ERROR');
+      setStatus("ERROR");
     };
 
     fetchAssets<Assets>(host + staticPath)
@@ -71,10 +71,10 @@ export const MicroFrontend = <T extends unknown>({
         loadCss(cssIds, root)
           .then(() => {
             const scriptIds = Object.values(manifest.files)
-              .filter((entry) => entry.endsWith('.js'))
+              .filter((entry) => entry.endsWith(".js"))
               .map((entry) => host + entry);
             const alreadyLoaded = scriptIds.every(
-              (scriptId) => document.getElementById(scriptId) !== null,
+              (scriptId) => document.getElementById(scriptId) !== null
             );
 
             if (alreadyLoaded) {

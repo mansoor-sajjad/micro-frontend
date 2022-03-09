@@ -5,7 +5,7 @@ import {
   UnmountEvent,
   MOUNT_EVENT_TYPE,
   UNMOUNT_EVENT_TYPE,
-} from './events';
+} from "./events";
 
 interface Config<T> {
   microFrontendId: string;

@@ -9,8 +9,8 @@ type UnmountEventDetail = {
   mountPoint: HTMLDivElement;
 };
 
-export const MOUNT_EVENT_TYPE = '@entur-micro-frontend:mount';
-export const UNMOUNT_EVENT_TYPE = '@entur-micro-frontend:unmount';
+export const MOUNT_EVENT_TYPE = "@entur-micro-frontend:mount";
+export const UNMOUNT_EVENT_TYPE = "@entur-micro-frontend:unmount";
 
 export interface MountEvent<T> extends CustomEvent<MountEventDetail<T>> {}
 export interface UnmountEvent extends CustomEvent<UnmountEventDetail> {}
@@ -23,9 +23,10 @@ export function createUnmountEvent(detail: UnmountEventDetail) {
   return new CustomEvent<UnmountEventDetail>(UNMOUNT_EVENT_TYPE, { detail });
 }
 
-export const ROUTE_CHANGE_EVENT_TYPE = '@entur-micro-frontend:after-route-change';
+export const ROUTE_CHANGE_EVENT_TYPE =
+  "@entur-micro-frontend:after-route-change";
 
-export type RouteAction = 'PUSH' | 'POP' | 'REPLACE';
+export type RouteAction = "PUSH" | "POP" | "REPLACE";
 
 type RouteChangeEventDetail = {
   location: Location;
