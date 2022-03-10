@@ -11,7 +11,7 @@
     "build": "npm run build:esm && npm run build:cjs",
     "build:esm": "tsc --outDir lib/esm",
     "build:cjs": "tsc --module commonjs --outDir lib/cjs",
-    "test": "jest --collectCoverage --testResultsProcessor=jest-sonar-reporter",
+    "test": "jest --collectCoverage",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,json,css,scss,md}'"
   },
   "files": [
@@ -25,6 +25,7 @@
     "@types/react": "17.0.40",
     "husky": "7.0.4",
     "jest": "27.5.1",
+    "jest-junit": "^13.0.0",
     "jest-sonar-reporter": "^2.0.0",
     "lint-staged": "12.3.5",
     "prettier": "2.5.1",
@@ -47,5 +48,12 @@
   },
   "engines": {
     "node": "16.14.0"
-  }
+  },
+  "dependencies": {
+    "jest-multiple-result-processors": "^0.0.4"
+  },
+  "jestTestResultProcessors": [
+    "jest-sonar-reporter",
+    "jest-junit"
+  ]
 }
