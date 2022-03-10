@@ -77,6 +77,8 @@ jobs:
     - run: *build
     - run: *test
     - run: *sonar-scanner-pull-request
+    - store_test_results:
+        path: test-report.xml
   build:
     executor: circleci-toolbox
     steps:
@@ -85,6 +87,8 @@ jobs:
     - run: *build
     - run: *test
     - run: *sonar-scanner
+    - store_test_results:
+        path: test-report.xml
 workflows:
   install-test-build-deploy:
     jobs:
