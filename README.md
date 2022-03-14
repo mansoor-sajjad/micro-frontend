@@ -69,6 +69,6 @@ Publish
 
     npm publish
 
-Push tag to github
+Push to github
 
-    git push --tags
+    git push && git push --tags
