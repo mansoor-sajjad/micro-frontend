@@ -104,7 +104,7 @@ export const MicroFrontend = <T extends unknown>({
       removeCSS(cssIds);
     };
     // eslint-disable-next-line
-  }, [name, host]);
+  }, [host]);
 
   return (
     <>
