@@ -51,7 +51,7 @@ The function takes a generic type that specifies the payload contract.
 
 ## Requirements
 
-The `MicroFrontend` component assumes that there is an `assets-manifest.json` file located at the path given by the `staticPath` prop at the given `host` prop. The structure of this file is  assumed to follow the standard output of `react-scripts` which uses `webpack-manifest-plugin` to generate the file.
+The `MicroFrontend` component assumes that there is an `asset-manifest.json` file located at the path given by the `staticPath` prop at the given `host` prop. The structure of this file is  assumed to follow the standard output of `react-scripts` which uses `webpack-manifest-plugin` to generate the file.
 
 When using TypeScript, use either the `DefaultPayload` type or provide your own, to describe the payload that is passed from the hosting application to the micro-frontend. The `DefaultPayload` type specifies a single `getToken` function prop, which is used to provide the micro-frontend with an authorization token.
 
