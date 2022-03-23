@@ -76,7 +76,7 @@ jobs:
     - restore_cache: *restore-dependency-cache
     - run: *build
     - run: *test
-    # - run: *sonar-scanner-pull-request
+    - run: *sonar-scanner-pull-request
     - store_test_results:
         path: junit.xml
   build:
@@ -86,7 +86,7 @@ jobs:
     - restore_cache: *restore-dependency-cache
     - run: *build
     - run: *test
-    # - run: *sonar-scanner
+    - run: *sonar-scanner
     - store_test_results:
         path: junit.xml
 workflows:
