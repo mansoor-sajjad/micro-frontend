@@ -62,18 +62,12 @@ executors:
             password: $DOCKER_PASSWORD
 
 jobs:
-  install:
-    executor: circleci-toolbox
-    steps:
-    - checkout
-    - restore_cache: *restore-dependency-cache
-    - run: *install-dependencies
-    - save_cache: *save-dependency-cache
   test-build:
     executor: circleci-toolbox
     steps:
     - checkout
     - restore_cache: *restore-dependency-cache
+    - run: *install-dependencies
     - run: *build
     - run: *test
     - run: *sonar-scanner-pull-request
@@ -84,6 +78,7 @@ jobs:
     steps:
     - checkout
     - restore_cache: *restore-dependency-cache
+    - run: *install-dependencies
     - run: *build
     - run: *test
     - run: *sonar-scanner
@@ -92,14 +87,9 @@ jobs:
 workflows:
   install-test-build-deploy:
     jobs:
-    - install:
-        name: npm-install
-        context: org-carbon
     - test-build:
         name: npm-test-build
         context: org-carbon
-        requires:
-        - npm-install
         filters:
           branches:
             ignore:
@@ -107,8 +97,6 @@ workflows:
     - build:
         name: npm-build
         context: global
-        requires:
-        - npm-install
         filters:
           branches:
             only:
