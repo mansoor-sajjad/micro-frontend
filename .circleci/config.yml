@@ -20,6 +20,7 @@ aliases:
   name: Restore dependency cache
   keys:
   - node_modules-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
+  - node_modules-{{ arch }}-
 - &sonar-scanner
   name: Sonar scanner
   command: |
