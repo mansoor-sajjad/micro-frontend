@@ -66,6 +66,7 @@ jobs:
     executor: circleci-toolbox
     steps:
     - checkout
+    - restore_cache: *restore-dependency-cache
     - run: *install-dependencies
     - save_cache: *save-dependency-cache
   test-build:
