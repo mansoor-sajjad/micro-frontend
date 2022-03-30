@@ -25,6 +25,10 @@ aliases:
   keys:
   - node_modules-v2-{{ arch }}-{{ .Branch }}-{{ checksum "package-lock.json" }}
   - node_modules-v2-{{ arch }}-
+- &sonar-login
+  name: Rename sonar environment variable for sonarcloud orb
+  command: |
+    echo "export SONAR_LOGIN=$ENTUR_SONAR_PASSWORD"  >> $BASH_ENV
 
 jobs:
   build:
@@ -37,8 +41,8 @@ jobs:
     - save_cache: *save-dependency-cache
     - run: *test
     - run: *build
-    - sonarcloud/scan:
-        sonar_token_variable_name: ENTUR_SONAR_PASSWORD
+    - run: *sonar-login
+    - sonarcloud/scan
     - store_test_results:
         path: junit.xml
 workflows:
