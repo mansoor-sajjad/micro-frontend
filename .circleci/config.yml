@@ -1,4 +1,8 @@
 version: 2.1
+
+orbs:
+  sonarcloud: sonarsource/sonarcloud@1.0.3
+
 aliases:
 - &ssh-fingerprint
     fingerprints:
@@ -21,59 +25,8 @@ aliases:
   keys:
   - node_modules-v2-{{ arch }}-{{ .Branch }}-{{ checksum "package-lock.json" }}
   - node_modules-v2-{{ arch }}-
-- &sonar-scanner
-  name: Sonar scanner
-  command: |
-    sonar-scanner \
-        -Dsonar.projectKey=entur_${CIRCLE_PROJECT_REPONAME} \
-        -Dsonar.organization=${SONAR_ORG} \
-        -Dsonar.projectName=${CIRCLE_PROJECT_REPONAME} \
-        -Dsonar.host.url=https://sonarcloud.io \
-        -Dsonar.login=${ENTUR_SONAR_PASSWORD} \
-        -Dsonar.sources=src \
-        -Dsonar.tests=src \
-        -Dsonar.test.inclusions=src/**/*.spec.ts,src/**/*.spec.tsx,src/**/*.test.ts,src/**/*.test.tsx \
-        -Dsonar.typescript.lcov.reportPaths=coverage/lcov.info \
-        -Dsonar.testExecutionReportPaths=test-report.xml
-- &sonar-scanner-pull-request
-  name: Sonar scanner pull request
-  command: |
-    sonar-scanner \
-        -Dsonar.projectKey=entur_${CIRCLE_PROJECT_REPONAME} \
-        -Dsonar.organization=${SONAR_ORG} \
-        -Dsonar.projectName=${CIRCLE_PROJECT_REPONAME} \
-        -Dsonar.host.url=https://sonarcloud.io \
-        -Dsonar.login=${ENTUR_SONAR_PASSWORD} \
-        -Dsonar.sources=src \
-        -Dsonar.tests=src \
-        -Dsonar.test.inclusions=src/**/*.spec.ts,src/**/*.spec.tsx,src/**/*.test.ts,src/**/*.test.tsx \
-        -Dsonar.typescript.lcov.reportPaths=coverage/lcov.info \
-        -Dsonar.testExecutionReportPaths=test-report.xml \
-        -Dsonar.pullrequest.key=${CIRCLE_PULL_REQUEST##*/} \
-        -Dsonar.pullrequest.branch=$CIRCLE_BRANCH \
-        -Dsonar.pullrequest.base=master
-
-executors:
-    circleci-toolbox:
-      docker:
-        - image: eu.gcr.io/entur-system-1287/circleci-toolbox-image-java11
-          auth:
-            username: _json_key
-            password: $DOCKER_PASSWORD
 
 jobs:
-  test-build:
-    docker:
-      - image: cimg/node:16.14.2
-    steps:
-    - checkout
-    - restore_cache: *restore-dependency-cache
-    - run: *install-dependencies
-    - run: *build
-    - run: *test
-    - run: *sonar-scanner-pull-request
-    - store_test_results:
-        path: junit.xml
   build:
     docker:
       - image: cimg/node:16.14.2
@@ -81,21 +34,16 @@ jobs:
     - checkout
     - restore_cache: *restore-dependency-cache
     - run: *install-dependencies
-    - run: *build
+    - save_cache: *save-dependency-cache
     - run: *test
-    - run: *sonar-scanner
+    - run: *build
+    - sonarcloud/scan:
+        sonar_token_variable_name: ENTUR_SONAR_PASSWORD
     - store_test_results:
         path: junit.xml
 workflows:
-  install-test-build-deploy:
+  install-test-build:
     jobs:
-    - test-build:
-        name: npm-test-build
-        context: global
-        filters:
-          branches:
-            ignore:
-            - master
     - build:
         name: npm-build
         context: global
