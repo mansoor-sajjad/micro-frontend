@@ -63,7 +63,8 @@ executors:
 
 jobs:
   test-build:
-    executor: circleci-toolbox
+    docker:
+      - image: cimg/node:16.14.2
     steps:
     - checkout
     - restore_cache: *restore-dependency-cache
@@ -74,7 +75,8 @@ jobs:
     - store_test_results:
         path: junit.xml
   build:
-    executor: circleci-toolbox
+    docker:
+      - image: cimg/node:16.14.2
     steps:
     - checkout
     - restore_cache: *restore-dependency-cache
@@ -89,7 +91,7 @@ workflows:
     jobs:
     - test-build:
         name: npm-test-build
-        context: org-carbon
+        context: global
         filters:
           branches:
             ignore:
