@@ -15,12 +15,12 @@ aliases:
 - &save-dependency-cache
   paths:
   - node_modules
-  key: node_modules-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
+  key: node_modules-v2-{{ arch }}-{{ .Branch }}-{{ checksum "package-lock.json" }}
 - &restore-dependency-cache
   name: Restore dependency cache
   keys:
-  - node_modules-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
-  - node_modules-{{ arch }}-
+  - node_modules-v2-{{ arch }}-{{ .Branch }}-{{ checksum "package-lock.json" }}
+  - node_modules-v2-{{ arch }}-
 - &sonar-scanner
   name: Sonar scanner
   command: |
