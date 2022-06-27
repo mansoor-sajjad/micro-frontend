@@ -1,3 +1,6 @@
 export interface DefaultPayload {
-  getToken: () => Promise<string>;
+  getToken?: () => Promise<string>;
+  providerId?: string;
+  env?: string;
+  locale?: string;
 }
