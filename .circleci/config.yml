@@ -46,7 +46,3 @@ workflows:
     - build:
         name: npm-build
         context: global
-        filters:
-          branches:
-            only:
-            - master
