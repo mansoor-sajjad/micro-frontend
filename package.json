@@ -47,7 +47,7 @@
     ]
   },
   "engines": {
-    "node": "16.15.1"
+    "node": "16.16.0"
   },
   "dependencies": {
     "jest-multiple-result-processors": "^0.0.4"
