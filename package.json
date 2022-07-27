@@ -22,7 +22,7 @@
   "license": "EUPL-1.0",
   "devDependencies": {
     "@types/jest": "27.5.2",
-    "@types/react": "17.0.47",
+    "@types/react": "17.0.48",
     "husky": "7.0.4",
     "jest": "27.5.1",
     "jest-junit": "13.2.0",
